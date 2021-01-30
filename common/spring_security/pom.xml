@@ -11,5 +11,26 @@
 
     <artifactId>spring_security</artifactId>
 
+    <dependencies>
+
+        <!-- 用到这里的工具类 -->
+        <dependency>
+            <groupId>com.atguigu</groupId>
+            <artifactId>service_base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Spring Security依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

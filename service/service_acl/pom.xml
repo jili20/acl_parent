@@ -11,5 +11,21 @@
 
     <artifactId>service_acl</artifactId>
 
+    <dependencies>
+
+        <!-- 引入权限认证模块 -->
+        <dependency>
+            <groupId>com.atguigu</groupId>
+            <artifactId>spring_security</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- json 工具 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>
