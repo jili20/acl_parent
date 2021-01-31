@@ -3,7 +3,6 @@ package com.atguigu.security.security;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.lettuce.core.codec.CompressionCodec;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -15,23 +14,22 @@ import java.util.Date;
  */
 @Component
 public class TokenManager {
-
-    //编码秘钥：要 JVM 方式生成复杂一些的
+    //token有效时长
+    private long tokenEcpiration = 24*60*60*1000;
+    //编码秘钥
     private String tokenSignKey = "123456";
-
-    // 1. 使用 jwt 根据用户名生成 token
+    //1 使用jwt根据用户名生成token
     public String createToken(String username) {
-        long tokenEcpiration = 24 * 60 * 60 * 1000; // token 有效时长；单位：毫秒；1天过期
-        return Jwts.builder().setSubject(username) // 主体
-                .setExpiration(new Date(System.currentTimeMillis() + tokenEcpiration)) // 过期时间 当前时间毫秒数+有效时长
-                .signWith(SignatureAlgorithm.ES512, tokenSignKey).compressWith(CompressionCodecs.GZIP).compact();
+        String token = Jwts.builder().setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis()+tokenEcpiration))
+                .signWith(SignatureAlgorithm.HS512, tokenSignKey).compressWith(CompressionCodecs.GZIP).compact();
+        return token;
     }
-
-    // 2. 根据 token 字符串得到用户信息
-    public String getUserInfoFromToken(String token){
-        return Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody().getSubject();
+    //2 根据token字符串得到用户信息
+    public String getUserInfoFromToken(String token) {
+        String userinfo = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody().getSubject();
+        return userinfo;
     }
-
-    // 3 删除token：不需要写，前端不携带 token 就行
+    //3 删除token
     public void removeToken(String token) { }
 }
